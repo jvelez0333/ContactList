@@ -13,3 +13,14 @@ up:
 	$(COMPOSE) up -d
 down:
 	$(COMPOSE) down
+install:
+	make down
+	make up
+	make api-vendors-install
+reload:
+	$(COMPOSE) stop
+	make up
+api-bash:
+	docker exec -it $(PROJECT_NAME)_api_1 bash
+nginx-bash:
+	docker exec -it $(PROJECT_NAME)_nginx_1 bash
