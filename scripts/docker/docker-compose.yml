@@ -1,0 +1,38 @@
+version: '3.6'
+services:
+  api:
+    build:
+      context: api
+      dockerfile: Dockerfile
+      args:
+        USER_ID: ${USER_ID:-0}
+        GROUP_ID: ${GROUP_ID:-0}
+    volumes:
+      - ../../app:/var/www/html/contactlist
+    links:
+      - db
+    networks:
+      - contactlist
+  nginx:
+    image: nginx:1.23
+    ports:
+      - "80:80"
+    volumes:
+      - ../../app:/var/www/html/contactlist
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    links:
+      - api
+    networks:
+      - contactlist
+  db:
+    image: library/mariadb:10.9
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      - MARIADB_ROOT_PASSWORD=1234
+    networks:
+      - contactlist
+networks:
+  contactlist:
+    driver: bridge
