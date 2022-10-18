@@ -48,10 +48,10 @@ class Contact
             $this->lastName
         );
     }
-    public static function fromDomain(ContactDomain $contact): self
+    public static function fromDomain(ContactDomain $contact): static
     {
-        return new self(
-            $contact->id()->value(),
+        return new  static(
+            $contact->getId()->value(),
             $contact->getFullName()->getFirstName(),
             $contact->getFullName()->getLastName(),
         );

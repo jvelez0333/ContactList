@@ -3,3 +3,7 @@ services:
     class: ContactList\Application\Queries\GetContactsHandler
     arguments:
       - '@api.repository.contactDoctrineRepository'
+  api.command.contacts.contactCreateHandler:
+    class: ContactList\Application\Commands\ContactCreateHandler
+    arguments:
+      - '@api.repository.contactDoctrineRepository'
