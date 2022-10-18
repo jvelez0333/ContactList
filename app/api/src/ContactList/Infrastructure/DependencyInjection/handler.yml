@@ -1,0 +1,5 @@
+services:
+  api.query.contacts.getContactsHandler:
+    class: ContactList\Application\Queries\GetContactsHandler
+    arguments:
+      - '@api.repository.contactDoctrineRepository'

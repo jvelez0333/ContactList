@@ -1,0 +1,7 @@
+services:
+  api.repository.contactInMemoryRepository:
+    class: ContactList\Infrastructure\Persistence\InMemory\Repositories\ContactInMemoryRepository
+  api.repository.contactDoctrineRepository:
+    class: ContactList\Infrastructure\Persistence\Doctrine\Repositories\ContactDoctrineRepository
+    arguments:
+      - '@doctrine.orm.default_entity_manager'

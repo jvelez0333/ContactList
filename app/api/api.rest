@@ -1,0 +1,18 @@
+@url = http://localhost:80
+
+### ********************************* PORTADA
+GET {{url}}
+
+
+### 
+GET {{url}}/contacts/
+
+### permiso ok -> customer.service.7.plama3.000c
+POST {{url}}/contacts
+Content-Type: application/json
+
+{
+  "id":"jvelez",
+  "firstName":"Juan Luis",
+  "lastName":"Velez Andujar"
+}
