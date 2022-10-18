@@ -2,3 +2,8 @@ api.getContactById:
   path: /contacts
   controller: 'api.controller.contacts.getContact'
   methods: [GET]
+
+api.contactCreate:
+  path: /contacts
+  controller: 'api.controller.contacts.contactCreate'
+  methods: [POST]

@@ -4,4 +4,9 @@ services:
     arguments:
       - '@api.query.contacts.getContactsHandler'
     public: true
+  api.controller.contacts.contactCreate:
+    class: ContactList\Infrastructure\Controllers\ContactCreateController
+    arguments:
+      - '@api.command.contacts.contactCreateHandler'
+    public: true
 
