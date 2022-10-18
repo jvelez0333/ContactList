@@ -1,0 +1,5 @@
+services:
+  api.controller.contacts.getContact:
+    class: ContactList\Infrastructure\Controllers\GetContactController
+    public: true
+

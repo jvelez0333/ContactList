@@ -1,0 +1,4 @@
+api.getContactById:
+  path: /contacts
+  controller: 'api.controller.contacts.getContact'
+  methods: [GET]

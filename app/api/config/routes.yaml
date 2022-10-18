@@ -1,3 +1,2 @@
-controllers:
-    resource: ../src/Controller/
-    type: attribute
+api:
+    resource: ../src/ContactList/Infrastructure/Routes/routes.yml
