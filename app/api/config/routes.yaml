@@ -1,0 +1,2 @@
+api:
+    resource: ../src/ContactList/Infrastructure/Routes/routes.yml

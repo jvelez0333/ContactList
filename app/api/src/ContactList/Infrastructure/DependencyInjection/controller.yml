@@ -1,0 +1,7 @@
+services:
+  api.controller.contacts.getContact:
+    class: ContactList\Infrastructure\Controllers\GetContactController
+    arguments:
+      - '@api.query.contacts.getContactsHandler'
+    public: true
+

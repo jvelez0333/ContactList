@@ -24,3 +24,5 @@ api-bash:
 	docker exec -it $(PROJECT_NAME)_api_1 bash
 nginx-bash:
 	docker exec -it $(PROJECT_NAME)_nginx_1 bash
+autoload:
+	docker exec -it $(PROJECT_NAME)_api_1 composer dump-autoload
