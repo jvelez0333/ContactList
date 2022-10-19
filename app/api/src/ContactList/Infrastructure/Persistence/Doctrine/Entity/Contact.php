@@ -6,15 +6,32 @@ namespace ContactList\Infrastructure\Persistence\Doctrine\Entity;
 
 
 use ContactList\CoreDomain\Entities\Contact\Contact as ContactDomain;
-use ContactList\CoreDomain\Entities\Contact\ContactImpl;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+
+
 
 class Contact
 {
-    public function __construct(
-        private string $id,
-        private string $firstName,
-        private string $lastName
-    ){}
+    public string $id;
+    public string $firstName;
+    public  string $lastName;
+    public Collection $contactCollection;
+
+    /**
+     * @param string $id
+     * @param string $firstName
+     * @param string $lastName
+     * @param Collection $contactCollection
+     */
+    public function __construct(string $id, string $firstName, string $lastName, Collection $contactCollection)
+    {
+        $this->id = $id;
+        $this->firstName = $firstName;
+        $this->lastName = $lastName;
+        $this->contactCollection = $contactCollection;
+    }
+
 
     /**
      * @return string
@@ -40,21 +57,28 @@ class Contact
         return $this->lastName;
     }
 
-    public function toDomain(): ContactDomain
+
+    public static function fromDomain(ContactDomain $contact): Contact
     {
-        return ContactImpl::toReadFromPrimitive(
-            $this->getId(),
-            $this->firstName,
-            $this->lastName
-        );
-    }
-    public static function fromDomain(ContactDomain $contact): static
-    {
-        return new  static(
+
+        $contactTypes= new ArrayCollection();
+
+        $contactCollection=$contact->getContactCollection();
+
+
+        if(!$contactCollection->isEmpty()){
+            foreach ($contact->getContactCollection()->getCollection() as $contactTypeDomain){
+                $contactTypeEntity=ContactType::fromDomain($contactTypeDomain);
+
+                $contactTypes->add($contactTypeEntity);
+            }
+        }
+
+      return new  Contact(
             $contact->getId()->value(),
             $contact->getFullName()->getFirstName(),
             $contact->getFullName()->getLastName(),
+            $contactTypes
         );
     }
-
 }

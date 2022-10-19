@@ -8,8 +8,7 @@ use ContactList\CoreDomain\Entities\Contact\Contact as ContactDomain;
 use ContactList\CoreDomain\Entities\Contact\ContactCollection;
 use ContactList\CoreDomain\Repositories\IContactRepository;
 use ContactList\Infrastructure\Persistence\Doctrine\Entity\Contact as ContactEntity;
-use Doctrine\ORM\Exception\ORMException;
-use Doctrine\ORM\OptimisticLockException;
+
 
 class ContactDoctrineRepository extends DoctrineRepository implements IContactRepository
 {
@@ -35,15 +34,18 @@ class ContactDoctrineRepository extends DoctrineRepository implements IContactRe
         return $contactCollection;
     }
 
-    /**
-     * @throws OptimisticLockException
-     * @throws ORMException
-     */
+
     public function insert(ContactDomain $contact)
     {
+
+        $contactEntity=ContactEntity::fromDomain($contact);
+
         $this->entityManager->persist(
-            ContactEntity::fromDomain($contact)
+            $contactEntity
         );
+        //todo:resolver problema al guardar en base de datos.
         $this->entityManager->flush();
+
+
     }
 }

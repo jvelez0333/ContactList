@@ -1,7 +1,4 @@
-create table contacts
-(
-    id        varchar(255) not null,
-    first_name varchar(255) not null,
-    last_name  varchar(255) not null,
-    primary key(id)
-);
+create database db_contacts;
+CREATE TABLE contact (id VARCHAR(50) NOT NULL, first_name VARCHAR(300) NOT NULL, last_name VARCHAR(300) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB;
+CREATE TABLE typesContact (id VARCHAR(255) NOT NULL, contact_id VARCHAR(50) DEFAULT NULL, type VARCHAR(100) NOT NULL, value VARCHAR(300) NOT NULL, description VARCHAR(300) NOT NULL, INDEX IDX_527C748E7A1254A (contact_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB;
+ALTER TABLE typesContact ADD CONSTRAINT FK_527C748E7A1254A FOREIGN KEY (contact_id) REFERENCES contact (id);
