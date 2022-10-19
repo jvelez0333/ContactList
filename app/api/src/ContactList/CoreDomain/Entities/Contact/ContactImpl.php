@@ -2,45 +2,72 @@
 
 namespace ContactList\CoreDomain\Entities\Contact;
 
+use ContactList\CoreDomain\Entities\Contact\ContactType\ContactTypeCollection;
 use ContactList\CoreDomain\Entities\Contact\FullName\FullNameFactory;
 use ContactList\CoreDomain\Entities\Contact\FullName\FullNameInterface;
+use Shared\CoreDomain\Exceptions\EmptyValueException;
 
 class ContactImpl implements Contact
 {
     public function __construct(
-        private ContactId $id,
-        private FullNameInterface $fullName)
+        private readonly ContactId         $id,
+        private readonly FullNameInterface $fullName,
+        private readonly ContactTypeCollection $contactTypeCollection)
     {
 
     }
-    /*
-     * Permite obtener una instancia de [contacto] CON validaciones de creación, a partir de datos primitivos.
+    /**
+     * @return ContactTypeCollection
      */
-    public static function toCreateFromPrimitive(
+    public function getContactTypeCollection(): ContactTypeCollection
+    {
+        return $this->contactTypeCollection;
+    }
+
+    /**
+     * @throws EmptyValueException
+     */
+    public static function toCreate(
         string $id,
         string $firstName,
-        string $lastName):ContactImpl
+        string $lastName,
+        ContactTypeCollection $contactTypeCollection):Contact
     {
-        $id= new ContactId($id);
-
         $fullName=FullNameFactory::toCreate($firstName,$lastName);
 
-        return  new  ContactImpl($id,$fullName);
+        if($contactTypeCollection->count()<1){
+            throw new EmptyValueException("Contacto");
+        }
+      return new  static(new ContactId($id),$fullName,$contactTypeCollection);
     }
-    /*
-    * Permite obtener una instancia de [contacto] SIN validaciones, a partir de datos primitivos.
-    */
-    public static function toReadFromPrimitive(
+
+    /**
+     * @throws EmptyValueException
+     */
+    public static function toBasic(string $contactId):Contact{
+
+    $fullName=FullNameFactory::toRead('','');
+
+    return new ContactImpl(
+                new ContactId($contactId)
+                ,$fullName
+            ,ContactTypeCollection::init()
+            );
+}
+    /**
+     * @throws EmptyValueException
+     */
+    public static function toRead(
         string $id,
         string $firstName,
-        string $lastName):ContactImpl
+        string $lastName,
+        ContactTypeCollection $contactTypeCollection):Contact
     {
-        $id= new ContactId($id);
-
         $fullName=FullNameFactory::toRead($firstName,$lastName);
 
-        return new ContactImpl($id,$fullName);
+        return  new  static(new ContactId($id),$fullName, $contactTypeCollection);
     }
+
     public function getId(): ContactId
     {
         return $this->id;
@@ -51,4 +78,8 @@ class ContactImpl implements Contact
         return $this->fullName;
     }
 
+    public function getContactCollection(): ContactTypeCollection
+    {
+        return $this->contactTypeCollection;
+    }
 }

@@ -24,6 +24,9 @@ class FullNameToCreate implements FullNameInterface
         return (string)$this->lastName;
     }
 
+    /**
+     * @throws EmptyValueException
+     */
     private function validate()
     {
         if(is_null($this->firstName) or empty($this->firstName)){

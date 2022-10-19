@@ -5,9 +5,10 @@ namespace ContactList\Application\DTOs\Request;
 class ContactCreateRequest
 {
     public function __construct(
-        private string $id,
-        private string $firstName,
-        private string $lastName
+        private readonly string $id,
+        private readonly string $firstName,
+        private readonly string $lastName,
+        private readonly array  $contacts
     ){
 
     }
@@ -26,6 +27,14 @@ class ContactCreateRequest
     public function getFirstName(): string
     {
         return $this->firstName;
+    }
+
+    /**
+     * @return array
+     */
+    public function getContacts(): array
+    {
+        return $this->contacts;
     }
 
     /**

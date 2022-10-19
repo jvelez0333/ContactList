@@ -1,0 +1,9 @@
+<doctrine-mapping>
+    <entity name="ContactList\Infrastructure\Persistence\Doctrine\Entity\ContactType" table="typesContact">
+        <id name="id" type="string" />
+        <field name="type" type="string" length="100" />
+        <field name="value" type="string" length="300" />
+        <field name="description" type="string" length="300" />
+        <many-to-one field="contact" target-entity="Contact" />
+    </entity>
+</doctrine-mapping>

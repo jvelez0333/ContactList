@@ -8,7 +8,6 @@ class ContactCollection extends ObjectCollection
 {
     protected function className(): string
     {
-        return Contact::class;
+        return ContactImpl::class;
     }
-
 }

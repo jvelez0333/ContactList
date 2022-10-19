@@ -26,3 +26,12 @@ nginx-bash:
 	docker exec -it $(PROJECT_NAME)_nginx_1 bash
 autoload:
 	docker exec -it $(PROJECT_NAME)_api_1 composer dump-autoload
+db-migration-generate:
+	docker exec -it $(PROJECT_NAME)_api_1 bin/console doc:mig:gen
+db-migration-migrate:
+	docker exec -it $(PROJECT_NAME)_api_1 bin/console doc:mig:mig
+db-create:
+	docker exec -it $(PROJECT_NAME)_api_1 sleep 10
+	docker exec -it $(PROJECT_NAME)_api_1 bin/console doc:mig:mig --no-interaction
+db-update-dump:
+	docker exec -it $(PROJECT_NAME)_api_1 bin/console doc:sch:upd --dump-sql

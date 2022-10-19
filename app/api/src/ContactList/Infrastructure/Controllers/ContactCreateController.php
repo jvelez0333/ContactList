@@ -27,13 +27,14 @@ class ContactCreateController
     {
         //dita...
         $data = $request->toArray();
-
+        $newContact = ($this->contactCreateHandler)(new ContactCreateRequest(
+            (string)$data['id'],
+            (string)$data['firstName'],
+            (string)$data['lastName'],
+            $data['contacts'],
+        ));
         try {
-            $newContact = ($this->contactCreateHandler)(new ContactCreateRequest(
-                (string)$data['id'],
-                (string)$data['firstName'],
-                (string)$data['lastName'],
-            ));
+
 
             $response = new Response(status: 201);
 
@@ -52,6 +53,7 @@ class ContactCreateController
             }else{
                 $response = new JsonResponse([
                     'code' => $e->getCode(),
+                    'exc' => $e->getMessage(),
                     'msn' => 'Error #[ '.$e->getCode().' ] contacte al administrador del sistema.'
                 ], 500);
             }
